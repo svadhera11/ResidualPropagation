@@ -8,6 +8,12 @@ from eval import *
 from dataset import load_dataset, dataset_statistics
 from utils import *
 
+# path for data/ folder containing datasets
+from pathlib import Path
+current_dir = Path(__file__).resolve().parent
+data_dir = current_dir.parent/"data"
+data_dir = data_dir.as_posix()
+
 class LabelPropagation(nn.Module):
     '''
     based on paper 'Learning with Local and Global Consistency'
@@ -48,7 +54,7 @@ def get_args():
     parser.add_argument('--fixed_split', default=False, action='store_true', help='Use fixed_split for cora/citeseer/pubmed datasets')
     parser.add_argument('--train_ratio', type=float, default=None, help='Training set ratio for random split')
     parser.add_argument('--device', type=str, default='cuda:0')
-    parser.add_argument('--data_dir', type=str, default='/data/')
+    parser.add_argument('--data_dir', type=str, default = data_dir)
 
     parser.add_argument('--seed', type=int, default=123)
     parser.add_argument('--runs', type=int, default=1, help='number of distinct runs')

@@ -33,8 +33,25 @@ Note that the efficiency of the label propagation algorithm is not optimized in 
 ![alt text](assets/image2.png)
 ![alt text](assets/image3.png)
 
+
+## Running the Code
+
+After cloning the repo, create a virtual directory using `python -m venv .venv`. Activate it using `source .venv/bin/activate`.
+Then use `pip install -r requirements.txt` to install the appropriate versions of the required packages.
+
+For running the basic version of the RP Algorithm, go to `RP/` and make `run.sh` as an executable using `chmod +x run.sh`. Then execute the script using `./run.sh`
+
+Perform the same steps for the Generalized RP algorithm in the `Generalized_RP` folder.
+
+Downloaded datasets will be saved in the `data/` folder.
+
+Change the scripts `run.sh` to modify the datasets or hyperparameters used.
+
 ## Visualization
 
-The folder contains the code for visualizing the evolution of GNNs' NTK matrices during training. To reproduce the results, first run the bash script `run.sh`, then use the notebook `visualization.ipynb`.
+The folder contains the code for visualizing the evolution of GNNs' NTK matrices during training. To reproduce the results, first run the bash script `run.sh` in the folder `Visualization`, then use the notebook `visualization.ipynb`.
+
+Change the script `run.sh` to modify the datasets or hyperparameters used.
+
 
 ![alt text](assets/image4.png)

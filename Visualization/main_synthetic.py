@@ -19,12 +19,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import argparse
 
+
+# path for data/ folder containing datasets
+from pathlib import Path
+current_dir = Path(__file__).resolve().parent
+data_dir = current_dir.parent/"data"
+data_dir = data_dir.as_posix()
+
 def get_args():
     parser = argparse.ArgumentParser(prog='Visualization Synthetic')
     parser.add_argument('--save_dir', type=str, default='figs/', help='Base directory for saving information.')
     parser.add_argument('--dataset', type=str, default='csbm')
     parser.add_argument('--device', type=str, default='cuda:0')
-    parser.add_argument('--data_dir', type=str, default='/data/')
+    parser.add_argument('--data_dir', type=str, default=data_dir)
     parser.add_argument('--seed', type=int, default=100)
 
     parser.add_argument('--model', type=str, default='GCN') 

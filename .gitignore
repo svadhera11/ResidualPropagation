@@ -108,3 +108,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# data
+data/*
+!data/.gitkeep
