@@ -72,9 +72,10 @@ def get_args():
     return args
 
 def main():
+    
     args = get_args(); fix_seed(args.seed)
     device = torch.device(args.device if torch.cuda.is_available() else 'cpu')
-
+    print("Using device:", device)
     # Prepare dataset
     data = load_dataset(args.data_dir, args.dataset, args.runs, train_ratio=args.train_ratio, fixed_split=args.fixed_split)
     data.to(device)
@@ -115,7 +116,25 @@ def main():
                 f'test {metric_name}': test_metric
             }
 
-            logger.update_metrics(metrics=metrics, step=step)
+            if step == 1:
+                prev_train = None
+                prev_val = None
+                prev_test = None
+            round_train = round(train_metric, 2)
+            round_val = round(val_metric, 2)
+            round_test = round(test_metric, 2)
+
+            if (
+                prev_train != round_train or
+                prev_val != round_val or
+                prev_test != round_test
+            ):
+                logger.update_metrics(metrics=metrics, step=step)
+            prev_train = round_train
+            prev_val = round_val
+            prev_test = round_test
+
+            
 
         logger.finish_run()
         
