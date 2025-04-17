@@ -85,7 +85,7 @@ class Logger:
             self.best_steps[-1] = step
 
         if self.verbose:
-            print(f'run: {self.cur_run:02d}, step: {step:03d}, '
+            print(f'run: {self.cur_run:02d}, step: {step}, '
                   f'train {self.metric}: {metrics[f"train {self.metric}"]:.2f}, '
                   f'val {self.metric}: {metrics[f"val {self.metric}"]:.2f}, '
                   f'test {self.metric}: {metrics[f"test {self.metric}"]:.2f}')
