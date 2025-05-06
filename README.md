@@ -22,8 +22,8 @@ The repository is organized into several key directories:
 
 This folder contains the implementation of the basic RP algorithm, which uses only the graph structure:
 
-- `main.py`: Core implementation of the standard RP algorithm (Algorithm 1 in the paper)
-- `main1.py` and `main2.py`: Variants with different experimental settings
+- `main.py`: Core implementation of the standard RP algorithm
+- `main1.py` and `main2.py`: Variants with RK$ and complementation settings respectively
 - `dataset.py`: Dataset loading and processing
 - `eval.py`: Evaluation metrics and utilities
 - `utils.py`: Helper functions for graph processing, logging, etc.
