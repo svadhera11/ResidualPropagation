@@ -48,6 +48,26 @@ for kernel in gaussian cosine sigmoid; do
   done
 done
 
+
+for kernel in gaussian cosine sigmoid; do
+  for lr in 0.5 1.0 2.0; do
+    for k in 1 2 3; do
+      echo "Running cs | kernel=$kernel | lr=$lr | k=$k | gamma=1.0" | tee -a $LOGFILE
+      python main.py --dataset cs --algorithm LP --kernel $kernel --lr $lr --alpha 1.0 --k $k --gamma 20 --steps 5000 --runs 1 --device cuda:1 2>&1 | tee -a $LOGFILE    
+    done
+  done
+done
+
+for kernel in gaussian cosine sigmoid; do
+  for lr in 0.5 1.0 2.0; do
+    for k in 0 1 2; do
+      echo "Running citeseer | kernel=$kernel | lr=$lr | k=$k | gamma=20.0" | tee -a $LOGFILE
+      python main.py --dataset physics --algorithm LP --kernel $kernel --lr $lr --alpha 1.0 --k $k --gamma 20 --steps 5000 --runs 1 --device cuda:1 2>&1 | tee -a $LOGFILE
+    done
+  done
+done
+
+
 echo "Run ended at $(date)" >> $LOGFILE
 
 
