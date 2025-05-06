@@ -1,6 +1,6 @@
 # Residual Propagation: Understanding GNN Learning Dynamics
 
-This is the official implementation of Residual Propagation (RP) proposed in ["How Graph Neural Networks Learn: Lessons from Training Dynamics"](https://arxiv.org/pdf/2310.05105), which is accepted to ICML 2024.
+This is the reproduction and ablation on official implementation of Residual Propagation (RP) proposed in ["How Graph Neural Networks Learn: Lessons from Training Dynamics"](https://arxiv.org/pdf/2310.05105), which is accepted to ICML 2024.
 
 ## Project Overview
 
