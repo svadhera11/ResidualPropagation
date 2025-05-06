@@ -203,9 +203,9 @@ The repository includes tools for analyzing experimental results:
 
 ```bash
 cd RP/
-python analyze-log.py  # Basic analysis
-python analyze-log1.py  # Summary statistics
-python analyze-log2.py  # Detailed performance metrics
+python analyze-log.py  # Basic RP/GRP analysis
+python analyze-log1.py  # RK4 analysis, Summary statistics
+python analyze-log2.py  # complementation analysis, Summary statistics
 ```
 
 ## Performance Highlights
@@ -218,8 +218,6 @@ Our algorithms achieve competitive performance across various benchmarks:
 - **GraphSAGE Integration**: Enables inductive learning with strong generalization
 
 ## Citation
-
-If you find this code useful for your research, please cite our paper:
 
 ```
 @author{,
