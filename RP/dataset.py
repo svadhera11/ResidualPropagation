@@ -1,6 +1,6 @@
 import torch
 import os
-from torch_geometric.datasets import Planetoid, HeterophilousGraphDataset, Actor, WebKB, WikipediaNetwork
+from torch_geometric.datasets import Planetoid, HeterophilousGraphDataset, Actor, WebKB, WikipediaNetwork, Coauthor
 import torch_geometric.transforms as T
 from ogb.nodeproppred import PygNodePropPredDataset
 import torch.nn.functional as F
@@ -53,6 +53,15 @@ def load_dataset(data_dir, dataset_name, runs, train_ratio = None, fixed_split =
         dataset = HeterophilousGraphDataset(root=os.path.join(data_dir, 'HeterophilousGraphDataset'), name=dataset_name)
         data = dataset[0]
         data.metric = "acc" if dataset_name in ('roman-empire', 'amazon-ratings') else "roc auc"
+
+
+    elif dataset_name in  ('cs', 'physics'):
+        dataset = Coauthor(root=os.path.join(data_dir, 'Coauthor'), name=dataset_name)
+        data = dataset[0]
+        n = data.x.shape[0]
+        train_ratio = 0.8
+        data = T.NormalizeFeatures()(data)
+        data.metric = "acc"
 
     # from paper 'Geom-gcn: Geometric graph convolutional networks'
     elif dataset_name in ('actor'):

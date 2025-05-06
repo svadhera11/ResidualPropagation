@@ -49,6 +49,13 @@ def GaussianKernel(X, gamma = 1):
     
     K = torch.exp(-gamma * (Si + Sj - 2 * Sij))
     return K
+
+def CosineKernel(X):
+    X = F.normalize(X, p=2, dim=1)
+    return torch.matmul(X, X.T)
+
+def SigmoidKernel(X, gamma=1.0):
+    return torch.sigmoid(gamma * torch.matmul(X, X.T))
     
 ALGORITHMS = {
     'LP': LabelPropagation
@@ -68,6 +75,7 @@ def get_args():
     parser.add_argument('--runs', type=int, default=1, help='number of distinct runs')
     parser.add_argument('--steps', type=int, default=200, help='number of steps for each run')
     parser.add_argument('--lr', type=float, default=0.01)
+    parser.add_argument('--kernel', type=str, default='gaussian', choices=['gaussian', 'cosine', 'sigmoid'], help='Kernel type')
 
     # The following arguments are for RP-like algorithms
     parser.add_argument('--algorithm', type=str, default='LP')
@@ -86,6 +94,7 @@ def get_args():
 def main():
     args = get_args(); fix_seed(args.seed)
     device = torch.device(args.device if torch.cuda.is_available() else 'cpu')
+    print(f"Using device: {device} ({torch.cuda.get_device_name(device) if torch.cuda.is_available() else 'CPU'})")
 
     # Prepare dataset
     data = load_dataset(args.data_dir, args.dataset, args.runs, train_ratio=args.train_ratio, fixed_split=args.fixed_split)
@@ -106,7 +115,15 @@ def main():
         train_mask, val_mask, test_mask = data.train_mask[:, run_idx], data.val_mask[:, run_idx], data.test_mask[:, run_idx]
 
         # kernel matrix 
-        K = GaussianKernel(data.x.cpu(), args.gamma)
+        if args.kernel == 'gaussian':
+            K = GaussianKernel(data.x.cpu(), args.gamma)
+        elif args.kernel == 'cosine':
+            K = CosineKernel(data.x.cpu())
+        elif args.kernel == 'sigmoid':
+            K = SigmoidKernel(data.x.cpu(), args.gamma)
+        else:
+            raise ValueError(f"Unknown kernel: {args.kernel}")
+
         D = K.sum(dim=0)**(-0.5)
         K = (K * D.unsqueeze(dim=0) * D.unsqueeze(dim=1)).to(device)
 
@@ -131,8 +148,24 @@ def main():
                 f'val {metric_name}': val_metric,
                 f'test {metric_name}': test_metric
             }
-            
-            logger.update_metrics(metrics=metrics, step=step)
+
+            if step == 1:
+                prev_train = None
+                prev_val = None
+                prev_test = None
+            round_train = round(train_metric, 2)
+            round_val = round(val_metric, 2)
+            round_test = round(test_metric, 2)
+
+            if (
+                prev_train != round_train or
+                prev_val != round_val or
+                prev_test != round_test
+            ):
+                logger.update_metrics(metrics=metrics, step=step)
+            prev_train = round_train
+            prev_val = round_val
+            prev_test = round_test
 
         logger.finish_run()
         
