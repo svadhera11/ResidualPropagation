@@ -11,7 +11,7 @@ Our implementation includes:
 1. **Basic RP Algorithm**: A simple yet effective label propagation approach that uses only the graph structure
 2. **Generalized RP Algorithm**: An extension that incorporates node features through different kernel functions
 3. **RK4 Integration**: Advanced numerical integration using Runge-Kutta methods
-4. **Complement mixing **: Complement mixing that injects global graph information.
+4. **Complement mixing**: Complement mixing that injects global graph information.
 5. **GraphSAGE Integration**: A version that integrates with GraphSAGE for inductive learning
 6. **Analysis Tools**: Scripts for analyzing experimental results and visualizing performance
 
