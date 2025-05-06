@@ -4,7 +4,7 @@ This is the reproduction and ablation on official implementation of Residual Pro
 
 ## Project Overview
 
-This project investigates how Graph Neural Networks (GNNs) learn from data by analyzing their training dynamics. We propose Residual Propagation (RP), a novel algorithm inspired by the training dynamics of GNNs, which achieves competitive performance while being simpler and more interpretable than complex GNN architectures.
+This project investigates how Graph Neural Networks (GNNs) learn from data by analyzing their training dynamics. We study Residual Propagation (RP), a novel algorithm inspired by the training dynamics of GNNs, which achieves competitive performance while being simpler and more interpretable than complex GNN architectures.
 
 Our implementation includes:
 
